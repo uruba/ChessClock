@@ -34,11 +34,13 @@
 
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="AppBarSettings" Label="settings" />
-                <AppBarButton x:Name="AppBarStop" Label="stop" Click="AppBarStop_Click" />
-                <AppBarButton x:Name="AppBarReset" Label="reset" Click="AppBarReset_Click" />
-            </CommandBar.SecondaryCommands>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="AppBarStop" Label="stop" Icon="Stop"
+               Click="AppBarStop_Click" Visibility="Collapsed" />
+                <AppBarButton x:Name="AppBarReset" Label="reset" Icon="Refresh"
+               Click="AppBarReset_Click" />
+                <AppBarButton x:Name="AppBarSettings" Label="settings" Icon="Setting"/>
+            </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

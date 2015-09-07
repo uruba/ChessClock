@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -78,6 +79,8 @@ namespace ChessClock
             }
 
             isTimerRunning = true;
+            AppBarReset.Visibility = Visibility.Visible;
+            AppBarStop.Visibility = Visibility.Visible;
         }
 
         private void stopTimer()
@@ -88,6 +91,7 @@ namespace ChessClock
             }
 
             isTimerRunning = false;
+            AppBarStop.Visibility = Visibility.Collapsed;
         }
 
         private void resetTimer()
@@ -98,7 +102,9 @@ namespace ChessClock
             {
                 timeProvider.resetTimer();
                ((Button)timeProvider.getSender()).Content = TimeProvider.formatTime(TimeProvider.newTime);
-            }         
+            }
+
+            AppBarReset.Visibility = Visibility.Collapsed;        
         }
     }
 }
