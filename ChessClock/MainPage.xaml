@@ -8,21 +8,28 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="BorderThickness" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+    </Page.Resources>
 
     <Grid Margin="16,12,16,12">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Button x:Name="buttonPlayer1" Content="Player 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                Grid.Row="0" RenderTransformOrigin="0.5,0.5" Click="buttonPlayer_Click" FontSize="26">
+        <Button x:Name="buttonPlayer1" Content="Player 1"
+                Grid.Row="0" RenderTransformOrigin="0.5,0.5"
+                Click="buttonPlayer_Click">
             <Button.RenderTransform>
                 <CompositeTransform Rotation="180"/>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="buttonPlayer2" Content="Player 2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                Grid.Row="1" Click="buttonPlayer_Click" FontSize="26"/>
+        <Button x:Name="buttonPlayer2" Content="Player 2" Grid.Row="1" Click="buttonPlayer_Click"/>
     </Grid>
 
     <Page.BottomAppBar>
