@@ -6,6 +6,8 @@ namespace ChessClock
 {
     public sealed class TimeProvider
     {
+        public static readonly TimeSpan newTime = new TimeSpan(0, 0, 0);
+
         private TimeSpan timeSpanTarget;
         private Stopwatch timer;
         private Timer cycleTimer;
@@ -32,6 +34,11 @@ namespace ChessClock
         public void setTime(TimeSpan timeSpan)
         {
             this.timeSpanTarget = timeSpan;
+        }
+
+        public object getSender()
+        {
+            return sender;
         }
 
         public void startTimer()

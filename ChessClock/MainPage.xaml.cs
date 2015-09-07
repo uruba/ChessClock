@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -11,14 +12,20 @@ namespace ChessClock
     /// </summary>
     public sealed partial class MainPage : Page, TimeProviderListener
     {
-        TimeProvider timeProviderPlayer1, timeProviderPlayer2;
+        private List<TimeProvider> timeProviders;
+        private Boolean isTimerRunning = false;
 
         public MainPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-      
+
+            timeProviders = new List<TimeProvider>();
+            timeProviders.Add(new TimeProvider(this, buttonPlayer1, TimeProvider.newTime));
+            timeProviders.Add(new TimeProvider(this, buttonPlayer2, TimeProvider.newTime));
+
+            resetTimer();
         }
 
         public async void onTimeProviderTick(TimeSpan timeSpanCurrent, object sender)
@@ -36,12 +43,18 @@ namespace ChessClock
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            resetTimer();
+            
         }
 
         private void buttonPlayer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            toggleTimer(sender);
+            foreach (TimeProvider timeProvider in timeProviders)
+            {
+                if (sender.Equals(timeProvider.getSender()) && (timeProvider.isTimerRunning() || !isTimerRunning))
+                {
+                    toggleTimer(sender);
+                }
+            }        
         }
 
         private void AppBarStop_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -56,58 +69,36 @@ namespace ChessClock
 
         private void toggleTimer(object sender)
         {
-            bool isTimerPlayer1Running = timeProviderPlayer1.isTimerRunning();
-            bool isTimerPlayer2Running = timeProviderPlayer2.isTimerRunning();
-
-            if (isTimerPlayer1Running || isTimerPlayer2Running)
+            foreach (TimeProvider timeProvider in timeProviders)
             {
-                if (
-                    (isTimerPlayer1Running && sender.Equals(buttonPlayer1)) 
-                    || 
-                    (isTimerPlayer2Running && sender.Equals(buttonPlayer2))
-                    ) {
-                    timeProviderPlayer1.toggleTimer();
-                    timeProviderPlayer2.toggleTimer();
-                }
+                if (isTimerRunning || (!isTimerRunning && sender.Equals(timeProvider.getSender())))
+                {
+                    timeProvider.toggleTimer();
+                }          
+            }
 
-                return;
-            }
-            
-
-            if (sender.Equals(buttonPlayer1))
-            {
-                timeProviderPlayer1.startTimer();
-            }
-            else if (sender.Equals(buttonPlayer2))
-            {
-                timeProviderPlayer2.startTimer();
-            }
+            isTimerRunning = true;
         }
 
         private void stopTimer()
         {
-            if (timeProviderPlayer1 != null)
+            foreach (TimeProvider timeProvider in timeProviders)
             {
-                timeProviderPlayer1.stopTimer();
+                timeProvider.stopTimer();
             }
-            
-            if (timeProviderPlayer2 != null)
-            {
-                timeProviderPlayer2.stopTimer();
-            } 
+
+            isTimerRunning = false;
         }
 
         private void resetTimer()
         {
             stopTimer();
 
-            TimeSpan newTime = new TimeSpan(0, 0, 0);
-
-            timeProviderPlayer1 = new TimeProvider(this, buttonPlayer1, newTime);
-            timeProviderPlayer2 = new TimeProvider(this, buttonPlayer2, newTime);
-
-            buttonPlayer1.Content = TimeProvider.formatTime(newTime);
-            buttonPlayer2.Content = TimeProvider.formatTime(newTime);           
+            foreach (TimeProvider timeProvider in timeProviders)
+            {
+                timeProvider.resetTimer();
+               ((Button)timeProvider.getSender()).Content = TimeProvider.formatTime(TimeProvider.newTime);
+            }         
         }
     }
 }
