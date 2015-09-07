@@ -10,7 +10,7 @@
 
     <Page.Resources>
         <Style TargetType="Button">
-            <Setter Property="FontSize" Value="26" />
+            <Setter Property="FontSize" Value="42" />
             <Setter Property="BorderThickness" Value="4" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -35,9 +35,9 @@
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="AppBarSettings" Label="Settings" />
-                <AppBarButton x:Name="AppBarStop" Label="Stop" Click="AppBarStop_Click" />
-                <AppBarButton x:Name="AppBarReset" Label="Reset" Click="AppBarReset_Click" />
+                <AppBarButton x:Name="AppBarSettings" Label="settings" />
+                <AppBarButton x:Name="AppBarStop" Label="stop" Click="AppBarStop_Click" />
+                <AppBarButton x:Name="AppBarReset" Label="reset" Click="AppBarReset_Click" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
