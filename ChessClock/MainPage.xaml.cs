@@ -18,18 +18,14 @@ namespace ChessClock
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-
-            TimeSpan newTime = new TimeSpan(0,0,0);
-
-            this.timeProviderPlayer1 = new TimeProvider(this, buttonPlayer1, newTime);
-            this.timeProviderPlayer2 = new TimeProvider(this, buttonPlayer2, newTime);
+      
         }
 
         public async void onTimeProviderTick(TimeSpan timeSpanCurrent, object sender)
         {
             Button button = (Button)sender;
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () => {
-                button.Content = TimeProvider.formatTime(timeSpanCurrent.Hours, timeSpanCurrent.Minutes, timeSpanCurrent.Seconds);
+                button.Content = TimeProvider.formatTime(timeSpanCurrent);
             });
         }
 
@@ -40,21 +36,25 @@ namespace ChessClock
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            buttonPlayer1.Content = "Player 1";
-            buttonPlayer2.Content = "Player 2";
+            resetTimer();
         }
 
-        private void buttonPlayer1_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void buttonPlayer_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            toggleTimer((Button)sender);
+            toggleTimer(sender);
         }
 
-        private void buttonPlayer2_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void AppBarStop_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            toggleTimer((Button)sender);
+            stopTimer();
         }
 
-        private void toggleTimer(Button sender)
+        private void AppBarReset_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            resetTimer();
+        }
+
+        private void toggleTimer(object sender)
         {
             bool isTimerPlayer1Running = timeProviderPlayer1.isTimerRunning();
             bool isTimerPlayer2Running = timeProviderPlayer2.isTimerRunning();
@@ -82,6 +82,32 @@ namespace ChessClock
             {
                 timeProviderPlayer2.startTimer();
             }
+        }
+
+        private void stopTimer()
+        {
+            if (timeProviderPlayer1 != null)
+            {
+                timeProviderPlayer1.stopTimer();
+            }
+            
+            if (timeProviderPlayer2 != null)
+            {
+                timeProviderPlayer2.stopTimer();
+            } 
+        }
+
+        private void resetTimer()
+        {
+            stopTimer();
+
+            TimeSpan newTime = new TimeSpan(0, 0, 0);
+
+            timeProviderPlayer1 = new TimeProvider(this, buttonPlayer1, newTime);
+            timeProviderPlayer2 = new TimeProvider(this, buttonPlayer2, newTime);
+
+            buttonPlayer1.Content = TimeProvider.formatTime(newTime);
+            buttonPlayer2.Content = TimeProvider.formatTime(newTime);           
         }
     }
 }

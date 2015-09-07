@@ -8,13 +8,13 @@ namespace ChessClock
     {
         private TimeSpan timeSpanTarget;
         private Stopwatch timer;
+        private Timer cycleTimer;
 
         private readonly TimeProviderListener listener;
         private readonly object sender;
         private readonly TimerCallback timerCallback;
         private readonly static int timerTickLength = 10;
-        private readonly TimeSpan timeSpanIncrement = new TimeSpan(0, 0, 0, 0, timerTickLength);
-        private readonly Timer cycleTimer;
+        private readonly TimeSpan timeSpanIncrement = new TimeSpan(0, 0, 0, 0, timerTickLength);      
 
         public TimeProvider(TimeProviderListener listener, object sender)
         {
@@ -22,7 +22,6 @@ namespace ChessClock
             this.listener = listener;
             this.sender = sender;
             timerCallback = new TimerCallback(timerTick);
-            cycleTimer = new Timer(this.timerTick, null, 0, 10);
         }
 
         public TimeProvider(TimeProviderListener listener, object sender, TimeSpan timeSpan) : this(listener, sender)
@@ -37,11 +36,16 @@ namespace ChessClock
 
         public void startTimer()
         {
+            cycleTimer = new Timer(this.timerTick, null, 0, 10);
             timer.Start();
         }
 
         public void stopTimer()
         {
+            if (cycleTimer != null)
+            {
+                cycleTimer.Dispose();
+            }       
             timer.Stop();
         }
 
@@ -70,6 +74,11 @@ namespace ChessClock
         public static String formatTime(int hours, int minutes, int seconds)
         {
             return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+        }
+
+        public static String formatTime(TimeSpan timeSpan)
+        {
+            return formatTime(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
 
         private void timerTick(object state)

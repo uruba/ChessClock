@@ -8,18 +8,30 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+
+
+    <Grid Margin="16,12,16,12">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Button x:Name="buttonPlayer1" Content="Player 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                Grid.Row="0" RenderTransformOrigin="0.5,0.5" Click="buttonPlayer1_Click">
+                Grid.Row="0" RenderTransformOrigin="0.5,0.5" Click="buttonPlayer_Click" FontSize="26">
             <Button.RenderTransform>
                 <CompositeTransform Rotation="180"/>
             </Button.RenderTransform>
         </Button>
         <Button x:Name="buttonPlayer2" Content="Player 2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                Grid.Row="1" Click="buttonPlayer2_Click"/>
+                Grid.Row="1" Click="buttonPlayer_Click" FontSize="26"/>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="AppBarSettings" Label="Settings" />
+                <AppBarButton x:Name="AppBarStop" Label="Stop" Click="AppBarStop_Click" />
+                <AppBarButton x:Name="AppBarReset" Label="Reset" Click="AppBarReset_Click" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
