@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using Windows.UI.Xaml.Controls;
 
 namespace ChessClock
 {
@@ -61,10 +62,12 @@ namespace ChessClock
             if (isTimerRunning())
             {
                 stopTimer();
+                ((Button)sender).IsEnabled = false;
             }
             else
             {
                 startTimer();
+                ((Button)sender).IsEnabled = true;
             }
         }
 

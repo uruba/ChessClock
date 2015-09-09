@@ -51,9 +51,12 @@ namespace ChessClock
         {
             foreach (TimeProvider timeProvider in timeProviders)
             {
+                // toggle timers if the sender belongs to the TimeProvider object currently iterated on
+                // and at the same time either the time provider's timer is running (currently active button)
+                // or the general isTimerRunning variable is false (it's the game's start)
                 if (sender.Equals(timeProvider.getSender()) && (timeProvider.isTimerRunning() || !isTimerRunning))
                 {
-                    toggleTimer(sender);
+                    toggleTimersFromButton(sender);
                 }
             }        
         }
@@ -68,14 +71,18 @@ namespace ChessClock
             resetTimer();
         }
 
-        private void toggleTimer(object sender)
+        private void toggleTimersFromButton(object sender)
         {
             foreach (TimeProvider timeProvider in timeProviders)
             {
                 if (isTimerRunning || (!isTimerRunning && sender.Equals(timeProvider.getSender())))
                 {
                     timeProvider.toggleTimer();
-                }          
+                }
+                else if (!isTimerRunning)
+                {
+                    ((Button)timeProvider.getSender()).IsEnabled = false;
+                }         
             }
 
             isTimerRunning = true;
@@ -101,7 +108,9 @@ namespace ChessClock
             foreach (TimeProvider timeProvider in timeProviders)
             {
                 timeProvider.resetTimer();
-               ((Button)timeProvider.getSender()).Content = TimeProvider.formatTime(TimeProvider.newTime);
+                Button button = (Button)timeProvider.getSender();
+                button.Content = TimeProvider.formatTime(TimeProvider.newTime);
+                button.IsEnabled = true;
             }
 
             AppBarReset.Visibility = Visibility.Collapsed;        
