@@ -75,10 +75,13 @@ namespace ChessClock
         {
             foreach (TimeProvider timeProvider in timeProviders)
             {
+                // toggle timer if the general isTimerRunning variable is true (i.e., the game is in progress)
+                // or if it is false (i.e., the game hasn't begun yet) and the sender is the currently clicked button
                 if (isTimerRunning || (!isTimerRunning && sender.Equals(timeProvider.getSender())))
                 {
                     timeProvider.toggleTimer();
                 }
+                // if the game is not running and the button hasn't been clicked either, let's disable it
                 else if (!isTimerRunning)
                 {
                     ((Button)timeProvider.getSender()).IsEnabled = false;
@@ -92,6 +95,7 @@ namespace ChessClock
 
         private void stopTimer()
         {
+            // we stop the timers in every timeProvider
             foreach (TimeProvider timeProvider in timeProviders)
             {
                 timeProvider.stopTimer();
@@ -103,8 +107,11 @@ namespace ChessClock
 
         private void resetTimer()
         {
+            // first we stop the timer (it may not be running, but we do not have to check for that)
             stopTimer();
 
+            // then we reset the timers in all the timeProviders 
+            // and set the corresponding buttons' content to the initial state
             foreach (TimeProvider timeProvider in timeProviders)
             {
                 timeProvider.resetTimer();
