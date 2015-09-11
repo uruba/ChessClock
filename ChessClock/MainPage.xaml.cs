@@ -29,12 +29,9 @@ namespace ChessClock
             resetTimer();
         }
 
-        public async void onTimeProviderTick(TimeSpan timeSpanCurrent, object sender)
+        public void onTimeProviderTick(TimeSpan timeSpanCurrent, object sender)
         {
-            Button button = (Button)sender;
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () => {
-                button.Content = TimeProvider.formatTime(timeSpanCurrent);
-            });
+            setButtonTimeCaption((Button) sender, timeSpanCurrent);
         }
 
         /// <summary>
@@ -69,6 +66,11 @@ namespace ChessClock
         private void AppBarReset_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             resetTimer();
+        }
+
+        private void AppBarSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
 
         private void toggleTimersFromButton(object sender)
@@ -116,11 +118,19 @@ namespace ChessClock
             {
                 timeProvider.resetTimer();
                 Button button = (Button)timeProvider.getSender();
-                button.Content = TimeProvider.formatTime(TimeProvider.newTime);
+                setButtonTimeCaption(button, TimeProvider.newTime);
                 button.IsEnabled = true;
             }
 
             AppBarReset.Visibility = Visibility.Collapsed;        
         }
+
+        private async void setButtonTimeCaption(Button button, TimeSpan timeSpan)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                button.Content = TimeProvider.formatTime(timeSpan);
+            });
+        }
+
     }
 }
