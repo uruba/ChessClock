@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessClock.Common;
+using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,6 +22,9 @@ namespace ChessClock
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
+
+            buttonPlayer1.DataContext = new ButtonDataServer();
+            buttonPlayer2.DataContext = new ButtonDataServer();
 
             timeProviders = new List<TimeProvider>();
             timeProviders.Add(new TimeProvider(this, buttonPlayer1, TimeProvider.newTime));
@@ -128,7 +132,7 @@ namespace ChessClock
         private async void setButtonTimeCaption(Button button, TimeSpan timeSpan)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                button.Content = TimeProvider.formatTime(timeSpan);
+                ((ButtonDataServer)button.DataContext).TimeValue = TimeProvider.formatTime(timeSpan);
             });
         }
 
