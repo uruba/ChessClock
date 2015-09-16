@@ -12,6 +12,15 @@ namespace ChessClock
         private TimeSpan timeSpanTarget;
         private Stopwatch timer;
         private Timer cycleTimer;
+        private int _iterationCount;
+
+        public int iterationCount
+        {
+            get
+            {
+                return _iterationCount;
+            }
+        }
 
         private readonly TimeProviderListener listener;
         private readonly object sender;
@@ -68,12 +77,15 @@ namespace ChessClock
             {
                 startTimer();
                 ((Button)sender).IsEnabled = true;
+                _iterationCount++;
             }
         }
 
         public void resetTimer()
         {
             timer.Reset();
+            _iterationCount = 0;
+            ((Button)sender).IsEnabled = true;
         }
 
         public bool isTimerRunning()
@@ -91,14 +103,19 @@ namespace ChessClock
             return formatTime(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
 
+        public String formatTime()
+        {
+            return formatTime(timer.Elapsed);
+        }
+
         private void timerTick(object state)
         {
-            listener.onTimeProviderTick(timer.Elapsed, sender);
+            listener.onTimeProviderTick(this);
         }
     }
 
     public interface TimeProviderListener
     {
-        void onTimeProviderTick(TimeSpan timeSpanCurrent, object sender);
+        void onTimeProviderTick(TimeProvider timeProvider);
     }
 }

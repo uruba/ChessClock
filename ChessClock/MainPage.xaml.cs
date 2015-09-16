@@ -33,9 +33,9 @@ namespace ChessClock
             resetTimer();
         }
 
-        public void onTimeProviderTick(TimeSpan timeSpanCurrent, object sender)
+        public void onTimeProviderTick(TimeProvider timeProvider)
         {
-            setButtonTimeCaption((Button) sender, timeSpanCurrent);
+            setButtonTimeCaption(timeProvider);
         }
 
         /// <summary>
@@ -121,18 +121,21 @@ namespace ChessClock
             foreach (TimeProvider timeProvider in timeProviders)
             {
                 timeProvider.resetTimer();
-                Button button = (Button)timeProvider.getSender();
-                setButtonTimeCaption(button, TimeProvider.newTime);
-                button.IsEnabled = true;
+                
+                setButtonTimeCaption(timeProvider);
             }
 
             AppBarReset.Visibility = Visibility.Collapsed;        
         }
 
-        private async void setButtonTimeCaption(Button button, TimeSpan timeSpan)
+        private async void setButtonTimeCaption(TimeProvider timeProvider)
         {
+            Button button = (Button)timeProvider.getSender();
+
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                ((ButtonDataServer)button.DataContext).TimeValue = TimeProvider.formatTime(timeSpan);
+                ButtonDataServer buttonDataContext = (ButtonDataServer)button.DataContext;
+                buttonDataContext.TimeValue = timeProvider.formatTime();
+                buttonDataContext.MoveValue = timeProvider.iterationCount.ToString();
             });
         }
 
