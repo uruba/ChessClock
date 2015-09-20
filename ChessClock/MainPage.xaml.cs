@@ -135,7 +135,7 @@ namespace ChessClock
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 ButtonDataServer buttonDataContext = (ButtonDataServer)button.DataContext;
                 buttonDataContext.TimeValue = timeProvider.formatTime();
-                buttonDataContext.MoveValue = timeProvider.iterationCount.ToString();
+                buttonDataContext.MoveValue = "Moves: " + timeProvider.iterationCount.ToString();
             });
         }
 

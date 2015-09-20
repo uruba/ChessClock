@@ -72,12 +72,12 @@ namespace ChessClock
             {
                 stopTimer();
                 ((Button)sender).IsEnabled = false;
+                _iterationCount++;
             }
             else
             {
                 startTimer();
-                ((Button)sender).IsEnabled = true;
-                _iterationCount++;
+                ((Button)sender).IsEnabled = true;   
             }
         }
 
