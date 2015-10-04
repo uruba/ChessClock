@@ -5,7 +5,8 @@ It is still very early in the development, so there's not much to see here just 
 
 ## Planned features
 
-*To be added.*
+* customizable countdown options
+* various UI layouts
 
 ## Early screenshots
 
