@@ -8,6 +8,7 @@ It is still very early in the development, so there's not much to see here just 
 * customizable countdown options (with presets)
 * various UI layouts
 * play sessions registry
+* "multi-screen" mode for two interconnected handsets (via Bluetooth)
 
 ## Early screenshots
 
