@@ -1,6 +1,7 @@
 ﻿using ChessClock.Common;
 using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -16,6 +17,7 @@ namespace ChessClock
     {
         private List<TimeProvider> timeProviders;
         private Boolean isTimerRunning = false;
+        private ResourceLoader loader;
 
         public MainPage()
         {
@@ -29,6 +31,8 @@ namespace ChessClock
             timeProviders = new List<TimeProvider>();
             timeProviders.Add(new TimeProvider(this, buttonPlayer1, TimeProvider.newTime));
             timeProviders.Add(new TimeProvider(this, buttonPlayer2, TimeProvider.newTime));
+
+            loader = new Windows.ApplicationModel.Resources.ResourceLoader();
 
             resetTimer();
         }
@@ -130,12 +134,11 @@ namespace ChessClock
 
         private async void setButtonTimeCaption(TimeProvider timeProvider)
         {
-            Button button = (Button)timeProvider.getSender();
-
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                Button button = (Button)timeProvider.getSender();
                 ButtonDataServer buttonDataContext = (ButtonDataServer)button.DataContext;
                 buttonDataContext.TimeValue = timeProvider.formatTime();
-                buttonDataContext.MoveValue = "Moves: " + timeProvider.iterationCount.ToString();
+                buttonDataContext.MoveValue = loader.GetString("button_moves") + ": " + timeProvider.iterationCount.ToString();
             });
         }
 
