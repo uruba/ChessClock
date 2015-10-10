@@ -120,4 +120,13 @@
   <data name="button_moves" xml:space="preserve">
     <value>Moves</value>
   </data>
+  <data name="button_reset.Label" xml:space="preserve">
+    <value>reset</value>
+  </data>
+  <data name="button_settings.Label" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="button_stop.Label" xml:space="preserve">
+    <value>stop</value>
+  </data>
 </root>
