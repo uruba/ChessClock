@@ -129,11 +129,13 @@ namespace ChessClock
                 setButtonTimeCaption(timeProvider);
             }
 
+            // hide the reset button
             AppBarReset.Visibility = Visibility.Collapsed;        
         }
 
         private async void setButtonTimeCaption(TimeProvider timeProvider)
         {
+            // update the button's text
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 Button button = (Button)timeProvider.getSender();
                 ButtonDataServer buttonDataContext = (ButtonDataServer)button.DataContext;
