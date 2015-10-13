@@ -6,7 +6,7 @@ It is still very early in the development, so there's not much to see here just 
 ## Planned features
 
 * customizable countdown options (with presets)
-* various UI layouts
+* various UI layouts (for both portrait and landscape modes)
 * play sessions registry
 * "multi-screen" mode for two interconnected handsets (via Bluetooth)
 
