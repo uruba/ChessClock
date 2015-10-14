@@ -29,8 +29,6 @@
 
         <!-- Content Grid -->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <TextBlock TextWrapping="Wrap" Margin="0,0,0,0" Text="Countdown mode" FontSize="16"/>
-            
             <TextBlock TextWrapping="Wrap" Margin="0,0,0,0" Text="Countdown time" FontSize="16"/>
             <TimePicker x:Name="timePickerCountdownTime" 
                 Margin="0,20,0,0" ClockIdentifier="24HourClock" Time="0" ToolTipService.ToolTip="sss" />
