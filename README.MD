@@ -9,6 +9,7 @@ It is still very early in the development, so there's not much to see here just 
 * various UI layouts (for both portrait and landscape modes)
 * play sessions registry
 * "multi-screen" mode for two interconnected handsets (via Bluetooth)
+* Windows 10 compatibility with support for various screen sizes
 
 ## What already works
 
