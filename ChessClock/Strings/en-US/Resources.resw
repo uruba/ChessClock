@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="button_moves" xml:space="preserve">
-    <value>Moves</value>
+    <value>Move</value>
   </data>
   <data name="button_reset.Label" xml:space="preserve">
     <value>reset</value>
